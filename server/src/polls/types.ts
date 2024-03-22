@@ -1,4 +1,6 @@
-import { Request } from '@nestjs/common';
+import { Request } from 'express';
+import { Nomination } from 'shared';
+import { Socket } from 'socket.io';
 
 // service types
 export type CreatePollFields = {
@@ -18,6 +20,18 @@ export type RejoinPollFields = {
   name: string;
 };
 
+export type AddParticipantFields = {
+  pollID: string;
+  userID: string;
+  name: string;
+};
+
+export type AddNominationFields = {
+  pollID: string;
+  userID: string;
+  text: string;
+};
+
 // repository types
 export type CreatePollData = {
   pollID: string;
@@ -32,10 +46,17 @@ export type AddParticipantData = {
   name: string;
 };
 
-type AuthPayload = {
+export type AddNominationData = {
+  pollID: string;
+  nominationID: string;
+  nomination: Nomination;
+};
+
+export type AuthPayload = {
   userID: string;
   pollID: string;
   name: string;
 };
 
 export type RequestWithAuth = Request & AuthPayload;
+export type SocketWithAuth = Socket & AuthPayload;
