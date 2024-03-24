@@ -16,21 +16,25 @@ const routeConfig = {
 };
 
 const Pages: React.FC = () => {
-  const currentSnapshot = useSnapshot(state);
+  const currentState = useSnapshot(state);
 
   useEffect(() => {
     // if I have a poll and it hasn't started
-    if (currentSnapshot.me?.id && !currentSnapshot.poll?.hasStarted) {
+    if (
+      currentState.me?.id &&
+      currentState.poll &&
+      !currentState.poll?.hasStarted
+    ) {
       actions.setPage(AppPage.WaitingRoom);
     }
-  }, [currentSnapshot.me?.id, currentSnapshot.poll?.hasStarted]);
+  }, [currentState.me?.id, currentState.poll?.hasStarted]);
 
   return (
     <>
       {Object.entries(routeConfig).map(([page, Component]) => (
         <CSSTransition
           key={page}
-          in={page === currentSnapshot.currentPage}
+          in={page === currentState.currentPage}
           timeout={300}
           classNames={'page'}
           unmountOnExit
