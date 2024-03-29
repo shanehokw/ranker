@@ -13,7 +13,7 @@ const ResultsList: React.FC<ResultsList> = ({ results }) => {
       <HorizontalSwipeList>
         {results.map((result, i) => (
           // Can use index as we'll never change list
-          <ResultCard key={i} result={result} />
+          <ResultCard key={i} results={result} />
         ))}
       </HorizontalSwipeList>
     </div>

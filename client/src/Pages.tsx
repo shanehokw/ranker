@@ -7,12 +7,16 @@ import Welcome from './pages/Welcome';
 import Create from './pages/Create';
 import Join from './pages/Join';
 import WaitingRoom from './pages/WaitingRoom';
+import Voting from './pages/Voting';
+import Results from './pages/Results';
 
 const routeConfig = {
   [AppPage.Welcome]: Welcome,
   [AppPage.Create]: Create,
   [AppPage.Join]: Join,
   [AppPage.WaitingRoom]: WaitingRoom,
+  [AppPage.Voting]: Voting,
+  [AppPage.Results]: Results,
 };
 
 const Pages: React.FC = () => {
@@ -27,7 +31,19 @@ const Pages: React.FC = () => {
     ) {
       actions.setPage(AppPage.WaitingRoom);
     }
-  }, [currentState.me?.id, currentState.poll?.hasStarted]);
+
+    if (currentState.me?.id && currentState.poll?.hasStarted) {
+      actions.setPage(AppPage.Voting);
+    }
+
+    if (currentState.me?.id && currentState.hasVoted) {
+      actions.setPage(AppPage.Results);
+    }
+  }, [
+    currentState.me?.id,
+    currentState.poll?.hasStarted,
+    currentState.hasVoted,
+  ]);
 
   return (
     <>
